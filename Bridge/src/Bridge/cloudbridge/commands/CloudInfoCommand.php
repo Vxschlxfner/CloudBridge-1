@@ -8,6 +8,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use Bridge\cloudbridge\Main;
+use pocketmine\world\World;
 
 class CloudInfoCommand extends Command
 {

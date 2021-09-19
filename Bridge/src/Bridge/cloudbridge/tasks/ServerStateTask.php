@@ -3,6 +3,7 @@
 namespace Bridge\cloudbridge\tasks;
 
 use pocketmine\scheduler\Task;
+use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\utils\MainLogger;
 use Bridge\cloudbridge\Main;
@@ -39,7 +40,7 @@ class ServerStateTask extends Task{
 				$file->save();
 			}
 		} catch (\Exception $exception) {
-			MainLogger::getLogger()->info(Main::PREFIX . "crashed. Regenerate!");
+			Server::getInstance()->getLogger()->info(Main::PREFIX . "crashed. Regenerate!");
 		}
 	}
 }

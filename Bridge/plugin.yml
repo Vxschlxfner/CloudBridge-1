@@ -1,0 +1,19 @@
+name: "CloudBridge"
+version: 1.0.0
+api: ["4.0.0"]
+author: BedrockCloud
+main: Bridge\cloudbridge\Main
+
+permissions:
+  bridge.shutdown:
+    default: op
+    description: Permission
+  cloudbridge.command.run:
+    default: op
+    description: Permission
+  cloudbridge.stopgroup:
+    default: op
+    description: Permission
+  cloudbridge.info:
+    default: op
+    description: Permission

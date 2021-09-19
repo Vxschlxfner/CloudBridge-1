@@ -11,12 +11,9 @@ use Bridge\cloudbridge\SocketShit;
 
 class StopServerGroupCommand extends Command{
 
-	private $main;
-
-	public function __construct(Main $main){
+	public function __construct(){
 		parent::__construct("stopgroup");
 		$this->setDescription("StopGroup Command");
-		$this->main = $main;
 	}
 
 	/**

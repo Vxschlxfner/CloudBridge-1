@@ -3,7 +3,6 @@
 
 namespace Bridge\cloudbridge\commands;
 
-use Bridge\cloudbridge\Main;
 use Bridge\cloudbridge\SocketShit;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;

@@ -15,8 +15,6 @@ class DisconnectPacket extends RequestPacket{
 	public const REASON_WRONG_PASSWORD  = 2;
 	public const REASON_CLOUD_SHUTDOWN  = 3;
 
-
-
 	/**
 	 * Function decodePayload
 	 * @return void

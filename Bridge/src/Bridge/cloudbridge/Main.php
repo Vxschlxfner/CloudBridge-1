@@ -10,7 +10,6 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
-use pocketmine\utils\MainLogger;
 use Bridge\cloudbridge\commands\CloudInfoCommand;
 use Bridge\cloudbridge\commands\RunCommand;
 use Bridge\cloudbridge\commands\StartServerCommand;
@@ -72,10 +71,10 @@ class Main extends PluginBase implements Listener{
 			$this->text();
 			$this->getLogger()->info("Connected to Cloud successful.");
 			$this->getServer()->getCommandMap()->registerAll(strtoupper($this->getName()), [
-				new StartServerCommand($this),
-				new StopServerGroupCommand($this),
-				new RunCommand($this),
-                new CloudInfoCommand($this),
+				new StartServerCommand(),
+				new StopServerGroupCommand(),
+				new RunCommand(),
+                new CloudInfoCommand(),
                 new ShutdownCommand("shutdown"),
 			]);
 		}
@@ -115,7 +114,8 @@ class Main extends PluginBase implements Listener{
 	 * Function login
 	 * @return void
 	 */
-	private function login(): void{//INFO: template for other packets.
+    //NOTE: template for other packets
+	private function login(): void{
 		$packet = new LoginPacket();
 		$packet->uuid = ServerManager::getServerUuid();
 		$packet->password = ServerManager::getCloudPassword();
@@ -235,12 +235,6 @@ class Main extends PluginBase implements Listener{
 
     public static function getRandomLobby(): ?string
     {
-
-        if (self::getLobbys() === null) {
-            return "null";
-        }
-
-        $cfg = new Config("/home/mcpe/CloudDatabase/server_groups.json", Config::JSON);
         $a = self::getLobbys();
         $lb = ($a != null) ? $a[array_rand($a)] : null;
         return $lb;

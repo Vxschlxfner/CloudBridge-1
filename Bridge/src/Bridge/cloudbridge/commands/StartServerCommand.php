@@ -10,12 +10,9 @@ use Bridge\cloudbridge\SocketShit;
 
 class StartServerCommand extends Command{
 
-	private $main;
-
-	public function __construct(Main $main){
+	public function __construct(){
 		parent::__construct("startserver");
 		$this->setDescription("Start a CloudServer Command");
-		$this->main = $main;
 	}
 
 	/**

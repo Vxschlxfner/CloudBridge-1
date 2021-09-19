@@ -10,7 +10,6 @@ class LoginPacket extends RequestPacket{
     /** @var string */
     public $password = "";
 
-
 	/**
 	 * Function decodePayload
 	 * @return void

@@ -5,7 +5,6 @@ namespace Bridge\cloudbridge\tasks;
 use pocketmine\scheduler\Task;
 use pocketmine\Server;
 use pocketmine\utils\Config;
-use pocketmine\utils\MainLogger;
 use Bridge\cloudbridge\Main;
 
 class ServerStateTask extends Task{

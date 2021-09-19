@@ -3,22 +3,18 @@
 namespace Bridge\cloudbridge\commands;
 
 use FormAPI\FormAPI;
-use MongoDB\Driver\Monitoring\CommandStartedEvent;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use Bridge\cloudbridge\Main;
-use pocketmine\world\World;
 
 class CloudInfoCommand extends Command
 {
-    private $main;
 
-    public function __construct(Main $main)
+    public function __construct()
     {
         parent::__construct("cloudinfo", "", "", []);
         $this->setDescription("CloudInfo Command");
-        $this->main = $main;
     }
 
     public static function onlineServerCountForm(Player $player)

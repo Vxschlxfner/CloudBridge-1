@@ -1,17 +1,10 @@
 <?php
 declare(strict_types=1);
 namespace Bridge\cloudbridge\packets;
+
 use pocketmine\utils\BinaryStream;
 use pocketmine\utils\Utils;
 
-
-/**
- * Class DataPacket
- * @package cloudbridge\cloudbridge\network
- * @author Florian H.
- * @date 18.06.2020 - 21:14
- * @project CloudBridge
- */
 abstract class DataPacket extends BinaryStream{
 
     public const NETWORK_ID = 0;

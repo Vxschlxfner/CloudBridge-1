@@ -12,8 +12,6 @@ class StartServerPacket extends RequestPacket{
 	/** @var int */
 	public $count    = 1;
 
-
-
 	/**
 	 * Function decodePayload
 	 * @return void

@@ -9,8 +9,6 @@ class ConsoleTextPacket extends Packet{
 	/** @var string */
     public $message = "";
 
-
-
 	/**
 	 * Function decodePayload
 	 * @return void

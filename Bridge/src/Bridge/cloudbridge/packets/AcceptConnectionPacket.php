@@ -8,7 +8,6 @@ class AcceptConnectionPacket extends Packet{
     /** @var string */
     public $string = "";
 
-
 	/**
 	 * Function pid
 	 * @return int

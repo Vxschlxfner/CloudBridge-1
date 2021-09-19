@@ -6,12 +6,10 @@ use pocketmine\command\CommandSender;
 use Bridge\cloudbridge\Main;
 
 class RunCommand extends Command{
-	private $main;
 
-	public function __construct(Main $main){
+	public function __construct(){
 		parent::__construct("run");
 		$this->setDescription("Run Command");
-		$this->main = $main;
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args){

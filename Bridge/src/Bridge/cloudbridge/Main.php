@@ -7,6 +7,7 @@ use cloudbridge\utils\InternetAddress;
 use FormAPI\FormAPI;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerLoginEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
@@ -53,6 +54,8 @@ class Main extends PluginBase implements Listener{
 	 */
 	public function onEnable(): void{
 		self::$inGame = false;
+        $this->saveResource("config.yml", false);
+
         @mkdir("/home/mcpe/CloudDatabase/");
 
 		FormAPI::enable($this);
@@ -85,8 +88,15 @@ class Main extends PluginBase implements Listener{
 		$this->max = Server::getInstance()->getMaxPlayers();
 		$this->getScheduler()->scheduleRepeatingTask(new ServerStateTask(), 1 * 5);
 		$this->getLogger()->info($this->prefix . "§aRegistered as " . $this->name);
-
 	}
+
+    public function onLogin(PlayerLoginEvent $event){
+        $player = $event->getPlayer();
+        $config = $this->getConfig();
+        if ($config->get("onlyproxyjoin") && $player->getNetworkSession()->getIp() !== $config->get("proxy-address")){
+            $player->kick("§cPlease join over the Proxy Server.", false);
+        }
+    }
 
 	/**
 	 * Function onJoin

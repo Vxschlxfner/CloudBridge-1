@@ -1,3 +1,7 @@
 # Config for onlyproxyjoin
 onlyproxyjoin: true
 proxy-address: 127.0.0.1
+
+# File Path
+file_path: "/home/mcpe/"
+cloud_path: "/home/mcpe/CloudServer/"

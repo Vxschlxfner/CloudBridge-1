@@ -2,6 +2,7 @@
 /* Copyright (c) 2021 Florian H. All rights reserved. */
 namespace Bridge\cloudbridge;
 
+use Bridge\cloudbridge\packets\SendMessagePacket;
 use cloudbridge\utils\InternetAddress;
 use cloudbridge\utils\UDPServerSocket;
 use pocketmine\scheduler\ClosureTask;
@@ -9,6 +10,7 @@ use Bridge\cloudbridge\event\cloud\CloudPacketReceive;
 use Bridge\cloudbridge\packets\ConsoleTextPacket;
 use Bridge\cloudbridge\packets\DataPacket;
 use Bridge\cloudbridge\packets\RequestPacket;
+use pocketmine\Server;
 
 class SocketShit{
 	/** @var resource */
@@ -59,11 +61,11 @@ class SocketShit{
 					$packet = PacketPool::getPacket($buffer);
 					if (!is_null($packet)) {
 						$packet->decode();
-						var_dump($packet);
 
 						if ($packet instanceof ConsoleTextPacket) {
 							Main::getInstance()->getLogger()->info("§e[ §b{$packet->sender} §e]	§f{$packet->message}");
 						}
+
 						$ev = new CloudPacketReceive($packet);
 						$ev->call();
 					}

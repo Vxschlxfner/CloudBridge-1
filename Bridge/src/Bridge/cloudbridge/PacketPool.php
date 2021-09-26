@@ -2,6 +2,8 @@
 /* Copyright (c) 2021 Florian H. All rights reserved. */
 namespace Bridge\cloudbridge;
 
+use Bridge\cloudbridge\packets\MessagePacket;
+use Bridge\cloudbridge\packets\SendMessagePacket;
 use pocketmine\utils\Binary;
 use Bridge\cloudbridge\packets\AcceptConnectionPacket;
 use Bridge\cloudbridge\packets\ConsoleTextPacket;
@@ -24,6 +26,8 @@ class PacketPool{
 		self::registerPacket(new DisconnectPacket());
 		self::registerPacket(new StartServerPacket());
 		self::registerPacket(new StopServerGroupPacket());
+        self::registerPacket(new SendMessagePacket());
+        self::registerPacket(new MessagePacket());
 	}
 
     /**

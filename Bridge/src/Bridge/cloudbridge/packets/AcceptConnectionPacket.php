@@ -2,7 +2,7 @@
 /* Copyright (c) 2021 Florian H. All rights reserved. */
 namespace Bridge\cloudbridge\packets;
 
-class AcceptConnectionPacket extends Packet{
+class AcceptConnectionPacket extends RequestPacket {
     public const NETWORK_ID = self::PACKET_ACCEPT_CONNECTION;
 
     /** @var string */

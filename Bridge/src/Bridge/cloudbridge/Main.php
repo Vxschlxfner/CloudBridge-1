@@ -3,7 +3,10 @@
 namespace Bridge\cloudbridge;
 
 use Bridge\cloudbridge\commands\ShutdownCommand;
+use Bridge\cloudbridge\packets\RequestPacket;
+use Bridge\cloudbridge\packets\SendMessagePacket;
 use cloudbridge\utils\InternetAddress;
+use cloudbridge\utils\Packets;
 use FormAPI\FormAPI;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -37,6 +40,8 @@ class Main extends PluginBase implements Listener{
 	public $name;
 	public $max;
 	public $ing;
+    public static $path = null;
+    public static $cloudPath = null;
 	public $file = "/home/mcpe/CloudDatabase/temp/";
 
 	const PREFIX = "§bCloud §8» §r";
@@ -53,10 +58,19 @@ class Main extends PluginBase implements Listener{
 	 * @throws \Exception
 	 */
 	public function onEnable(): void{
-		self::$inGame = false;
+
         $this->saveResource("config.yml", false);
 
-        @mkdir("/home/mcpe/CloudDatabase/");
+        if (!$this->getConfig()->exists("file_path")) $this->getConfig()->set("file_path", "/home/mcpe/");
+        if (!$this->getConfig()->exists("cloud_path")) $this->getConfig()->set("file_path", "/home/mcpe/CloudServer/");
+
+        self::$path = $this->getConfig()->get("file_path") ?? "/home/mcpe/";
+        self::$path = $this->getConfig()->get("cloud_path") ?? "/home/mcpe/CloudServer/";
+        $this->file = self::$path . "CloudDatabase/temp/";
+		self::$inGame = false;
+
+        @mkdir(self::$path . "CloudDatabase/");
+        @mkdir(self::$path . "CloudDatabase/temp/");
 
 		FormAPI::enable($this);
 
@@ -70,8 +84,8 @@ class Main extends PluginBase implements Listener{
 			throw new \Exception("Cannot connect to Cloud.");
 		} else {
 			self::$connected = true;
-			$this->login();
-			$this->text();
+			Packets::login();
+			Packets::text();
 			$this->getLogger()->info("Connected to Cloud successful.");
 			$this->getServer()->getCommandMap()->registerAll(strtoupper($this->getName()), [
 				new StartServerCommand(),
@@ -113,37 +127,6 @@ class Main extends PluginBase implements Listener{
 		}
 	}
 
-	private function text(): void{
-		$packet = new ConsoleTextPacket();
-		$packet->sender = Server::getInstance()->getMotd();
-		$packet->message = "§e{$packet->sender} §ahas connected to the §eCloud§7!";
-		SocketShit::sendPacket($packet);
-	}
-
-	/**
-	 * Function login
-	 * @return void
-	 */
-    //NOTE: template for other packets
-	private function login(): void{
-		$packet = new LoginPacket();
-		$packet->uuid = ServerManager::getServerUuid();
-		$packet->password = ServerManager::getCloudPassword();
-		SocketShit::sendPacket($packet);
-	}
-
-	/**
-	 * Function disconnect
-	 * @return void
-	 * @throws \Exception
-	 */
-	private function disconnect(): void{
-		$packet = new DisconnectPacket();
-		$packet->requestId = Server::getInstance()->getMotd();
-		$packet->reason = 1;
-		SocketShit::sendPacket($packet);
-	}
-
 	/**
 	 * Function onDisable
 	 * @return void
@@ -151,7 +134,7 @@ class Main extends PluginBase implements Listener{
 	 */
 	public function onDisable(): void{
 		try {
-			$this->disconnect();
+			Packets::disconnect();
             SocketShit::$cloudSocket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
             $socket = socket_connect(SocketShit::$cloudSocket, SocketShit::$cloudAddress->getIp(), SocketShit::$cloudAddress->getPort());
             if ($socket) {
@@ -224,18 +207,26 @@ class Main extends PluginBase implements Listener{
 	public function onReceiveCloudPacket(CloudPacketReceive $event): void{
 		$packet = $event->getPacket();
 
-		if ($packet instanceof AcceptConnectionPacket) {
-			try {
-				$ev = new ServerLoginEvent();
-				$ev->call();
-			} catch (\ErrorException $exception) {
-				$this->getLogger()->logException($exception);
-			}
-		}
+        if ($packet instanceof RequestPacket) {
+            if ($packet instanceof AcceptConnectionPacket) {
+                try {
+                    $ev = new ServerLoginEvent();
+                    $ev->call();
+                } catch (\ErrorException $exception) {
+                    $this->getLogger()->logException($exception);
+                }
+            } elseif ($packet instanceof SendMessagePacket){
+                foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer){
+                    if ($packet->message !== null){
+                        $onlinePlayer->sendMessage($packet->message);
+                    }
+                }
+            }
+        }
 	}
 
     public static function getLobbys(): ?array{
-        $cfg = new Config("/home/mcpe/CloudDatabase/server_groups.json", Config::JSON);
+        $cfg = new Config(self::$path . "CloudDatabase/server_groups.json", Config::JSON);
         if ($cfg->getAll()["Lobby"] !== []) {
             return $cfg->getAll()["Lobby"];
         } else {
@@ -251,7 +242,7 @@ class Main extends PluginBase implements Listener{
     }
 
 	public function isTemplate(string $template){
-	    if (is_dir("/home/mcpe/CloudServer/templates/{$template}")){
+	    if (is_dir(self::$cloudPath . "CloudServer/templates/{$template}")){
 	        return true;
         } else {
 	        return false;
@@ -259,7 +250,7 @@ class Main extends PluginBase implements Listener{
     }
 
     public static function countTemplates(): int{
-        $cfg = new Config("/home/mcpe/CloudDatabase/server_groups.json", Config::JSON);
+        $cfg = new Config(self::$path . "CloudDatabase/server_groups.json", Config::JSON);
         return count($cfg->getAll());
     }
 }

@@ -7,8 +7,6 @@ class DisconnectPacket extends RequestPacket{
 
 	/** @var int */
 	public $reason = 0;
-	/** @var string */
-	public $requestId = "";
 
 	public const REASON_UNKNOWN         = 0;
 	public const REASON_SERVER_SHUTDOWN = 1;
@@ -20,7 +18,6 @@ class DisconnectPacket extends RequestPacket{
 	 * @return void
 	 */
 	protected function decodePayload(): void{
-		$this->requestId = $this->getString();
 		$this->reason = $this->getInt();
 	}
 
@@ -29,7 +26,6 @@ class DisconnectPacket extends RequestPacket{
 	 * @return void
 	 */
 	protected function encodePayload(): void{
-		$this->putString($this->requestId);
 		$this->putInt($this->reason);
 	}
 }

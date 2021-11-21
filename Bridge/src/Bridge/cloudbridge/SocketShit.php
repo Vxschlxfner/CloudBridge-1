@@ -39,7 +39,10 @@ class SocketShit{
 		self::$serverAddress = $serverAddress;
 		self::$serverSocket = new UDPServerSocket(self::$serverAddress);
 
-		Main::getInstance()->getScheduler()->scheduleRepeatingTask(new ClosureTask(function (int $currentTick): void{$this->onTick($currentTick);}), 1);
+		Main::getInstance()->getScheduler()->scheduleRepeatingTask(new ClosureTask(function (): void{
+            $this->onTick();
+        }
+        ), 1);
 	}
 
     /**

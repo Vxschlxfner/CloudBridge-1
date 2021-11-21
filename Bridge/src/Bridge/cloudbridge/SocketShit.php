@@ -133,7 +133,7 @@ class SocketShit{
 		if (!self::$closed) {
 			$packet->encode();
 			$buffer = $packet->getBuffer();
-			$function = function (int $currentTick) use ($buffer): void{
+			$function = function () use ($buffer): void{
 				socket_write(self::$cloudSocket, $buffer, strlen($buffer));
 			};
 			Main::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask($function), 20 * $seconds);

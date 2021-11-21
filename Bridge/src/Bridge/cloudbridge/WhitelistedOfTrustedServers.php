@@ -2,7 +2,7 @@
 /* Copyright (c) 2021 Florian H. All rights reserved. */
 namespace Bridge\cloudbridge;
 
-use cloudbridge\utils\InternetAddress;
+use Bridge\cloudbridge\utils\InternetAddress;
 
 class WhitelistedOfTrustedServers{
 	/** @var InternetAddress */

@@ -3,8 +3,8 @@
 namespace Bridge\cloudbridge;
 
 use Bridge\cloudbridge\packets\SendMessagePacket;
-use cloudbridge\utils\InternetAddress;
-use cloudbridge\utils\UDPServerSocket;
+use Bridge\cloudbridge\utils\InternetAddress;
+use Bridge\cloudbridge\utils\UDPServerSocket;
 use pocketmine\scheduler\ClosureTask;
 use Bridge\cloudbridge\event\cloud\CloudPacketReceive;
 use Bridge\cloudbridge\packets\ConsoleTextPacket;

@@ -1,6 +1,6 @@
 <?php
 
-namespace cloudbridge\utils;
+namespace Bridge\cloudbridge\utils;
 
 use Bridge\cloudbridge\packets\ConsoleTextPacket;
 use Bridge\cloudbridge\packets\DisconnectPacket;

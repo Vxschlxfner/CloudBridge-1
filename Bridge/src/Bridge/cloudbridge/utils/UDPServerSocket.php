@@ -1,6 +1,6 @@
 <?php
 
-namespace cloudbridge\utils;
+namespace Bridge\cloudbridge\utils;
 
 use function socket_bind;
 use function socket_close;

@@ -5,7 +5,7 @@ namespace Bridge\cloudbridge;
 use Bridge\cloudbridge\commands\ShutdownCommand;
 use Bridge\cloudbridge\packets\RequestPacket;
 use Bridge\cloudbridge\packets\SendMessagePacket;
-use cloudbridge\utils\InternetAddress;
+use Bridge\cloudbridge\utils\InternetAddress;
 use cloudbridge\utils\Packets;
 use FormAPI\FormAPI;
 use pocketmine\event\Listener;

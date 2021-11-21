@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace cloudbridge\utils;
+namespace Bridge\cloudbridge\utils;
 
 final class InternetAddress{
 
